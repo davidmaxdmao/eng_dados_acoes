@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from decouple import config
 
 
@@ -11,3 +12,11 @@ def open_conection_db():
     conn = engine.connect()
 
     return conn
+
+def open_session():
+
+    engine = open_conection_db()
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    return session
