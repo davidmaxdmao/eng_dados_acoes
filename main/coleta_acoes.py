@@ -1,9 +1,11 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import time
+import os
 
 
-browser = webdriver.Chrome('../chromedriver')
+path_chromedriver = os.getcwd() + '/chromedriver'
+browser = webdriver.Chrome(path_chromedriver)
 url = 'https://www.google.com/search?q=petr4'
 browser.get(url)
 time.sleep(5)  # esperar 5 segundos para carregar os dados do site.
