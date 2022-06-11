@@ -1,5 +1,6 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, ForeignKey, Integer, String, Float, Date
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, DateTime
+from sqlalchemy.sql import func
 
 
 Base = declarative_base()
@@ -15,6 +16,7 @@ class Acao(Base):
     capitalizacao = Column(String)
     indice_pl = Column(Float)
     rendimento_dividendos = Column(String)
+    data_ciracao = Column(DateTime(timezone=True), server_default=func.now())
 
     def __repr__(self):
         return f'Ação: {self.ticker}'
@@ -26,7 +28,7 @@ class Empresa(Base):
     id = Column(Integer, primary_key=True)
     nome = Column(String)
     ceo = Column(String)
-    fundacao_data = Column(Date)
+    fundacao_data = Column(String)
     sede = Column(String)
     site = Column(String)
 
