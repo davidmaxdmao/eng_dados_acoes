@@ -26,4 +26,4 @@ def coleta_dados_acao(ticker_acao):
     dados_acao['indice_pl'] = float(indice_pl.replace(',', '.'))
     dados_acao['fechamento'] = float(fechamento.replace(',', '.'))
 
-    return dados_acao
+    return [dados_acao]

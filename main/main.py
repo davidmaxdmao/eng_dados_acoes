@@ -2,6 +2,7 @@ from coleta_acoes import coleta_dados_acao
 from coleta_empresas import coleta_dados_empresa
 from models import Acao, Empresa
 from database.conection import open_conection_db, open_session
+from gerador_csv import gerar_csv_acoes
 
 
 ticker = 'petr4'
@@ -20,14 +21,19 @@ empresa.site = dados_empresa['site']
 session.add(empresa)
 session.commit()
 
-acao = Acao()
-acao.empresa_id = empresa.id
-acao.ticker = ticker
-acao.abertura = dados_acao['valor_abertura']
-acao.valor_fechamento = dados_acao['fechamento']
-acao.capitalizacao = dados_acao['capitalizacao']
-acao.indice_pl = dados_acao['indice_pl']
-acao.rendimento_dividendos = dados_acao['dividendos']
+for dados in dados_acao:
+    acao = Acao()
+    acao.empresa_id = empresa.id
+    acao.ticker = ticker
+    dados['ticker'] = ticker
+    acao.abertura = dados['valor_abertura']
+    acao.valor_fechamento = dados['fechamento']
+    acao.capitalizacao = dados['capitalizacao']
+    acao.indice_pl = dados['indice_pl']
+    acao.rendimento_dividendos = dados['dividendos']
+    
+gerar_csv_acoes(dados_acao)
+    
 
 session.add(acao)
 session.commit()
