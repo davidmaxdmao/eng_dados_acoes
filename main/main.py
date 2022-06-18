@@ -31,12 +31,14 @@ for dados in dados_acao:
     acao.capitalizacao = dados['capitalizacao']
     acao.indice_pl = dados['indice_pl']
     acao.rendimento_dividendos = dados['dividendos']
+
+    session.add(acao)
+    session.commit()
+
+    dados['data'] = acao.data_ciracao.date()
     
 gerar_csv_acoes(dados_acao)
     
-
-session.add(acao)
-session.commit()
 
 conn.close()
 session.close()
