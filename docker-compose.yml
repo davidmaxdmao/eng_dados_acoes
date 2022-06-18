@@ -22,6 +22,16 @@ services:
       - 80:80
     networks:
       - infra
+  
+  sftp:
+    image: atmoz/sftp
+    volumes:
+        - ./sftp-upload:/home/simuladorsftp/upload
+    ports:
+        - "22:22"
+    command: simuladorsftp:pass
+    networks:
+      - infra
 
 networks:
   infra:
