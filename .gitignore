@@ -2,4 +2,5 @@
 descricao.txt
 .env
 tmp/
+postgres-data
 __pycache__/
