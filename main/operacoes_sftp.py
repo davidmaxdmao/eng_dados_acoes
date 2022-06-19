@@ -1,4 +1,5 @@
 import paramiko
+from paramiko.ssh_exception import AuthenticationException, FileNotFoundError
 
 
 class OperacoesSftp:
@@ -10,9 +11,14 @@ class OperacoesSftp:
         self._password = password
 
     def cliente_sftp(self):
-        transporte = paramiko.Transport((self._host, self._port))
-        transporte.connect(username=self._username, password=self._password)
-        cliente = paramiko.SFTPClient.from_transport(transporte)
+
+        try:
+            transporte = paramiko.Transport((self._host, self._port))
+            transporte.connect(username=self._username, password=self._password)
+            cliente = paramiko.SFTPClient.from_transport(transporte)
+
+        except AuthenticationException as e:
+            return (False, f'Falha na conecexão com o SFTP. {e}')
 
         return cliente
 
@@ -22,8 +28,8 @@ class OperacoesSftp:
             cliente = self.cliente_sftp()
             cliente.get(remote_path, localpath)
         
-        except Exception as e:
-            return False
+        except FileNotFoundError as e:
+            return (False, f'Arquivo ou diretório inválido. {e}')
 
         cliente.close()
 
@@ -36,8 +42,8 @@ class OperacoesSftp:
         try:
             cliente.put(localpath, remote_path)
             cliente.close()
-
-        except Exception as e:
-            return False
+        
+        except FileNotFoundError as e:
+            return (False, f'Arquivo ou diretório inválido. {e}')
         
         return True
