@@ -55,7 +55,7 @@ def main():
     sftp = OperacoesSftp(host_sftp, port_sftp, user_sftp, pass_sftp)
     caminho_local = f'upload/{arquivo}'
     caminho_remoto = f'/home/duki/Documentos/TI/eng-dados-estudos/projetos/ETL_acoes/main/tmp/{arquivo}'
-    arquivo_enviado = sftp.enviar_arquivo(caminho_remoto, caminho_local):
+    arquivo_enviado = sftp.enviar_arquivo(caminho_remoto, caminho_local)
     
     if not arquivo_enviado:
         # TODO
