@@ -1,5 +1,5 @@
 import paramiko
-from paramiko.ssh_exception import AuthenticationException, FileNotFoundError
+from paramiko.ssh_exception import AuthenticationException
 
 
 class OperacoesSftp:
@@ -18,24 +18,36 @@ class OperacoesSftp:
             cliente = paramiko.SFTPClient.from_transport(transporte)
 
         except AuthenticationException as e:
-            return (False, f'Falha na conecexão com o SFTP. {e}')
+            # TODO logar a mensagem de erro
+            # f'Falha na conecexão com o SFTP. {e}'
+
+            return False
 
         return cliente
 
-    def get_planilha_ftp(self, remote_path, localpath):
+    def get_arquivo(self, remote_path, localpath):
         
         try:
             cliente = self.cliente_sftp()
             cliente.get(remote_path, localpath)
         
         except FileNotFoundError as e:
-            return (False, f'Arquivo ou diretório inválido. {e}')
+            # TODO logar a mensagem de erro
+            # f'Erro inesperado ao tetnar recuperar arquivo do servidor. f{e}'
+
+            return False
+        
+        except Exception as e:
+            # TODO logar a mensagem de erro
+            # f'Erro inesperado ao tetnar recuperar arquivo do servidor. f{e}'
+
+            return False
 
         cliente.close()
 
         return True
 
-    def backup_planilha(self, remote_path, localpath):
+    def enviar_arquivo(self, remote_path, localpath):
 
         cliente = self.cliente_sftp()
 
@@ -44,6 +56,15 @@ class OperacoesSftp:
             cliente.close()
         
         except FileNotFoundError as e:
-            return (False, f'Arquivo ou diretório inválido. {e}')
+            # TODO logar a mensagem de erro
+            # f'Erro inesperado ao enviar arquivo para o servidor. {e}'
+
+            return False
+
+        except Exception as e:
+            # TODO logar a mensagem de erro
+            # f'Erro inesperado ao enviar arquivo para o servidor. {e}'
+
+            return False
         
         return True
