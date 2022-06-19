@@ -43,7 +43,10 @@ def main():
         
     arquivo = gerar_csv_acoes(dados_acao)
 
-    if not arquivo
+    if not arquivo:
+        # TODO
+        # Logar uma mensagem de erro
+        return arquivo
 
     host_sftp = config('HOST_SFTP')
     port_sftp = config('PORT_SFTP', cast=int)
@@ -55,6 +58,8 @@ def main():
     arquivo_enviado = sftp.enviar_arquivo(caminho_remoto, caminho_local):
     
     if not arquivo_enviado:
+        # TODO
+        # logar mensagem de erro
         return arquivo_enviado
 
 
