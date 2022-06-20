@@ -16,14 +16,21 @@ def coleta_dados_acao(ticker_acao):
     soup = BeautifulSoup(html, features='html.parser')
 
     dados_acao = {}
-    valor_abertura = soup.find('div', {'class':'PZPZlf', 'data-attrid':'Abertura'}).get_text()
-    dados_acao['capitalizacao'] = soup.find('div', {'class':'PZPZlf', 'data-attrid':'Cap. merc.'}).get_text()
-    dados_acao['dividendos'] = soup.find('div', {'class':'PZPZlf', 'data-attrid':'Rend. div.'}).get_text()
-    indice_pl = soup.find('div', {'class':'PZPZlf', 'data-attrid':'Índice P/L'}).get_text()
-    fechamento = soup.find('span', {'class':'IsqQVc NprOob wT3VGc', 'jsname':'vWLAgc'}).get_text()
 
-    dados_acao['valor_abertura'] = float(valor_abertura.replace(',', '.'))
-    dados_acao['indice_pl'] = float(indice_pl.replace(',', '.'))
-    dados_acao['fechamento'] = float(fechamento.replace(',', '.'))
+    try:
+        valor_abertura = soup.find('div', {'class':'PZPZlf', 'data-attrid':'Abertura'}).get_text()
+        dados_acao['capitalizacao'] = soup.find('div', {'class':'PZPZlf', 'data-attrid':'Cap. merc.'}).get_text()
+        dados_acao['dividendos'] = soup.find('div', {'class':'PZPZlf', 'data-attrid':'Rend. div.'}).get_text()
+        indice_pl = soup.find('div', {'class':'PZPZlf', 'data-attrid':'Índice P/L'}).get_text()
+        fechamento = soup.find('span', {'class':'IsqQVc NprOob wT3VGc', 'jsname':'vWLAgc'}).get_text()
+
+        dados_acao['valor_abertura'] = float(valor_abertura.replace(',', '.'))
+        dados_acao['indice_pl'] = float(indice_pl.replace(',', '.'))
+        dados_acao['fechamento'] = float(fechamento.replace(',', '.'))
+    
+    except Exception as e:
+        # TODO
+        # logar mensagem de erro
+        return False
 
     return [dados_acao]
