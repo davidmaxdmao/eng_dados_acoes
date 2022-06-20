@@ -1,5 +1,4 @@
-from coleta_acoes import coleta_dados_acao
-from coleta_empresas import coleta_dados_empresa
+from main.coleta_dados import coletar_dados_acao, coletar_dados_empresa
 from models import Acao, Empresa
 from database.conection import open_conection_db, open_session
 from gerador_csv import gerar_csv_acoes
@@ -10,8 +9,8 @@ from decouple import config
 
 def main():
     ticker = 'petr4'
-    dados_acao = coleta_dados_acao(ticker)
-    dados_empresa = coleta_dados_empresa(ticker)
+    dados_acao = coletar_dados_acao(ticker)
+    dados_empresa = coletar_dados_empresa(ticker)
     conn = open_conection_db()
     session = open_session()
 
